@@ -104,12 +104,22 @@ ui <- fluidPage(
       numericInput("apr", "APR (%)", value = 2.3, step = 0.1),
       numericInput("principal", "Principal ($)", value = 16500, step = 100),
       numericInput("payment", "Monthly Payment ($)", value = 650, step = 10),
-      actionButton("go", "Calculate", class = "btn btn-primary")
+      actionButton("go", "Calculate", class = "btn btn-primary"),
+      
+      # GitHub repo link
+      tags$a(
+        href = "https://github.com/meltemod/loancalculatR",
+        "View source code on GitHub",
+        target = "_blank",
+        style = "display: block; margin-top: 20px; font-size: 14px; color: #0366d6; text-align: center;"
+      )
     ),
+  
     
     mainPanel(
       uiOutput("styledResults"),
       plotOutput("timelinePlot")
+      
     )
   )
 )
@@ -166,7 +176,7 @@ server <- function(input, output) {
         plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        legend.position = "none"
+        legend.position = "bottom"
       )
   })
   
