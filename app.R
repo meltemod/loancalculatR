@@ -162,21 +162,38 @@ server <- function(input, output) {
     req(results())
     df <- results()$timeline
     
-    ggplot(df, aes(x = Month)) +
-      geom_line(aes(y = Remaining), color = "#2a9d8f", size = 1.2, linetype = "solid") +
-      geom_line(aes(y = CumulativeInterest), color = "#b30000", size = 1.2, linetype = "dashed") +
+    # Reshape the data to long format
+    df_long <- tidyr::pivot_longer(
+      df,
+      cols = c(Remaining, CumulativeInterest),
+      names_to = "LineType",
+      values_to = "Value"
+    )
+    
+    ggplot(df_long, aes(x = Month, y = Value, color = LineType, linetype = LineType)) +
+      geom_line(linewidth = 1.2) +
       theme_minimal(base_family = "Helvetica") +
       labs(
-        title = "Remaining Balance vs. Cumulative Interest Over Time",
+        title = "Remaining Balance vs. Cumulative Interest\nOver Time",
         x = "Month",
-        y = "Amount ($)"
+        y = "Amount ($)",
+        color = "Metric",
+        linetype = "Metric"
       ) +
+      scale_color_manual(values = c(
+        "Remaining" = "#2a9d8f",
+        "CumulativeInterest" = "#b30000"
+      )) +
+      scale_linetype_manual(values = c(
+        "Remaining" = "solid",
+        "CumulativeInterest" = "dashed"
+      )) +
       scale_y_continuous(labels = scales::dollar_format()) +
       theme(
         plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
         axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        legend.position = "bottom"
+        legend.position = "top"
       )
   })
   
