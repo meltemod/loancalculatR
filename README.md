@@ -25,5 +25,5 @@ This Shiny app helps users understand how long it will take to pay off a loan, h
 
 ## Try It Out
 
-http://your-domain.com/loan-calculator
+https://meltemod.shinyapps.io/loancalculatr/
 
