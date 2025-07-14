@@ -7,7 +7,8 @@ library(scales)    # For formatting y-axis as currency
 # define function ----
 
 calc_payment_outcomes <- function(apr, principal, pay) {
-  r <- apr ^ (1/12) / 100  # monthly interest rate from annual %
+  
+  r <- ((100 + apr) / 100) ^ (1 / 12) - 1   # monthly interest rate from annual %
   remaining <- principal
   total_pay <- 0
   total_months <- 0
